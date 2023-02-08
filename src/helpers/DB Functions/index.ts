@@ -1,5 +1,5 @@
 import notificationModel from "../../models/notifications"
-import { notificationDto } from "../interfaces/notification.dto"
+import { notificationDto,studentDto } from "../interfaces/notification.dto"
 import { onlineUserDTO } from "../interfaces/user.dto"
 
 
@@ -10,15 +10,21 @@ const addNotificationMsgToDb = (body: notificationDto, onlineUsers: Array<online
         return user
     })
 
-    body.allianceData.students.map((student: any, index: number) => {
+    body.allianceData.students.map((student: studentDto, index: number) => {
         student.seen = false
+        delete student.JoinDate
         const onlineCheck = onlineUsers.find((user) => user.userId == student.id)
         if (onlineCheck) {
             student.seen = true
         }
     })
-    
-    return new notificationModel({ userId: body.user.userId, allianceId: body.allianceData._id, title: body.title, recipient: body.allianceData.students }).save()
+
+    return new notificationModel({ userId: body.user.userId, allianceId: body.allianceData._id, title: body.title, recipient: body.allianceData.students,type:body.type}).save()
 }
 
-export { addNotificationMsgToDb }
+const fetchNotifications = async (data: onlineUserDTO) => {
+    const notifications = await notificationModel.find({ recipient: { $elemMatch: { seen: false, id: data.userId } } })
+    return notifications
+}
+
+export { addNotificationMsgToDb, fetchNotifications }

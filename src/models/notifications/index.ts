@@ -10,7 +10,8 @@ const notificationSchema: Schema = new Schema({
     time: { type: Date, default: Date.now },
     title: { type: String, required: true },
     description: { type: String, required: false },
-    recipient:{type:Array,required:false}
+    recipient:{type:Array,required:false},
+    type:{type:String,required:true}
 })
 
 export default mongoose.model<notificationModel>('notifications', notificationSchema)

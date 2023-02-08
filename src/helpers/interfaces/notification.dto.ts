@@ -7,7 +7,7 @@ interface recipientDto {
 
 interface studentDto extends recipientDto {
     id: String,
-    JoinDate: String,
+    JoinDate: String|null|undefined,
 }
 
 interface userDto{
@@ -28,6 +28,8 @@ interface notificationDto {
     description: String,
     time: Date,
     allianceData: AllianceDataDTO,
+    recipient:studentDto[],
+    type:String
 }
 
 

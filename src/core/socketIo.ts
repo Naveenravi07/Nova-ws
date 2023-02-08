@@ -1,6 +1,7 @@
 import { Server as SocketServer, Socket } from 'socket.io'
 import { Server as httpServer } from 'http'
-import { addNotificationMsgToDb } from '../helpers/DB Functions'
+import { addNotificationMsgToDb, fetchNotifications } from '../helpers/DB Functions'
+import { onlineUserDTO } from '../helpers/interfaces/user.dto'
 
 export default (server: httpServer) => {
 
@@ -20,6 +21,12 @@ export default (server: httpServer) => {
 
         socket.on('join_multiple_alliance_rooms', (rooms) => {
             socket.join(rooms)
+        })
+
+        socket.on('fetch_notifications',async(data:onlineUserDTO,callback:Function)=>{
+            const noti = await fetchNotifications(data)
+            console.log(noti);
+            callback(noti)
         })
     })
 }
