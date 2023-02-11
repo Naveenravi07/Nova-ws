@@ -1,8 +1,7 @@
 import mongoose, { Schema } from "mongoose";
-import { notificationDto } from "../../helpers/interfaces/notification.dto";
-import { studentDto } from "../../helpers/interfaces/notification.dto";
+import {notificationModal} from '../../helpers/interfaces/notifications.dto'
 
-export interface notificationModel extends notificationDto, mongoose.Document { }
+export interface notificationModel extends notificationModal, mongoose.Document { }
 
 const notificationSchema: Schema = new Schema({
     userId: { type: String, required: true },

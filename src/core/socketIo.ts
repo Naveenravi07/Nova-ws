@@ -1,7 +1,9 @@
 import { Server as SocketServer, Socket } from 'socket.io'
 import { Server as httpServer } from 'http'
 import { addNotificationMsgToDb, fetchNotifications } from '../helpers/DB Functions'
-import { onlineUserDTO } from '../helpers/interfaces/user.dto'
+import { onlineUserDTO } from '../helpers/interfaces/user.dtoo'
+import { notification } from '../helpers/interfaces/notifications.dto'
+
 
 export default (server: httpServer) => {
 
@@ -11,7 +13,7 @@ export default (server: httpServer) => {
 
     io.on('connection', (socket: Socket) => {
 
-        socket.on('alc_new_member_join', async (body) => {
+        socket.on('alc_new_member_join', async (body: notification) => {
             socket.join(body.allianceData._id)
             const activeUsers: any = await io.in(body.allianceData._id).fetchSockets()
             const title = `${body.user.userName} Joined ${body.allianceData.name}`
@@ -23,10 +25,11 @@ export default (server: httpServer) => {
             socket.join(rooms)
         })
 
-        socket.on('fetch_notifications',async(data:onlineUserDTO,callback:Function)=>{
+        socket.on('fetch_notifications', async (data: onlineUserDTO, callback: Function) => {
             const noti = await fetchNotifications(data)
             console.log(noti);
             callback(noti)
         })
+        
     })
 }
