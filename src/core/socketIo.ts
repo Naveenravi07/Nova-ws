@@ -15,10 +15,7 @@ export default (server: httpServer) => {
 
         socket.on('alc_new_member_join', async (body: notification) => {
             socket.join(body.allianceData._id)
-            const activeUsers: any = await io.in(body.allianceData._id).fetchSockets()
-            const title = `${body.user.userName} Joined ${body.allianceData.name}`
-            addNotificationMsgToDb({ ...body, title: title }, activeUsers.map((soc: any) => soc.handshake.query.auth))
-            socket.broadcast.to(body.allianceData._id).emit('alc_new_member_join_alert', title)
+            addNotificationMsgToDb(body, io).then((response => socket.broadcast.to(body.allianceData._id).emit('alc_new_member_join_alert', response)))
         })
 
         socket.on('join_multiple_alliance_rooms', (rooms) => {
@@ -30,6 +27,6 @@ export default (server: httpServer) => {
             console.log(noti);
             callback(noti)
         })
-        
+
     })
 }
