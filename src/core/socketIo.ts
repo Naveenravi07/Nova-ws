@@ -24,7 +24,7 @@ export default (server: httpServer) => {
 
         socket.on('fetch_notifications', async (data: onlineUserDTO, callback: Function) => {
             const noti = await fetchNotifications(data)
-            console.log(noti);
+            
             callback(noti)
         })
 

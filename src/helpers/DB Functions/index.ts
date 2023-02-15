@@ -7,12 +7,16 @@ const addNotificationMsgToDb = async (body: notification, io: Server) => {
 
     const activeUsers: onlineUserDTO[] = await io.in(body.allianceData._id).fetchSockets().then((sockets) => sockets.map((soc: any) => JSON.parse(soc.handshake.query.auth)))
     const title = `${body.user.userName} Joined ${body.allianceData.name}`
+    const ownerIndex = body.allianceData.students.findIndex((s1)=>s1.id==body.user.id)
+    if(ownerIndex>-1) delete body.allianceData.students[ownerIndex]
     body.allianceData.students.map((student) => {
         student.seen = false
         delete student.JoinDate
         if (activeUsers.find((user) => user.userId == student.id)) student.seen = true
     })
-    return new notificationModel({ userId: body.user.id, allianceId: body.allianceData._id, title: title, recipient: body.allianceData.students, type: body.type }).save()
+    //Preventing null objects ==>
+    const filterdRecipients = body.allianceData.students.filter(student=>student) 
+    return new notificationModel({ userId: body.user.id, allianceId: body.allianceData._id, title: title, recipient:filterdRecipients, type: body.type }).save()
 }
 
 const fetchNotifications = async (data: onlineUserDTO) => {
