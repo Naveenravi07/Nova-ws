@@ -16,7 +16,7 @@ const addNotificationMsgToDb = async (body: notification, io: Server) => {
 }
 
 const fetchNotifications = async (data: onlineUserDTO) => {
-    const notifications = await notificationModel.find({ recipient: { $elemMatch: { seen: false, id: data.userId } } })
+    const notifications = await notificationModel.find({ recipient: { $elemMatch: {id: data.userId } } })
     return notifications
 }
 
