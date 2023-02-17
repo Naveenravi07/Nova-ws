@@ -16,7 +16,7 @@ const addNotificationMsgToDb = async (body: notification, io: Server) => {
     })
     //Preventing null objects ==>
     const filterdRecipients = body.allianceData.students.filter(student=>student) 
-    return new notificationModel({ userId: body.user.id, allianceId: body.allianceData._id, title: title, recipient:filterdRecipients, type: body.type }).save()
+    return new notificationModel({ userId: body.user.id, allianceId: body.allianceData._id, title: title, recipient:filterdRecipients, type: body.type,allianceName:body.allianceData.name,userName:body.user.userName }).save()
 }
 
 const fetchNotifications = async (data: onlineUserDTO) => {

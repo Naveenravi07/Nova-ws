@@ -1,17 +1,19 @@
-import { alliance } from "./alliance.dto"
-import { socketUser } from "./user.dtoo"
+import { alliance } from "./alliance.dto";
+import { socketUser } from "./user.dtoo";
 
 export interface notificationModal {
-    userId: String
-    title: String
-    description: String
-    time: Date
-    allianceId: String
-    recipient: socketUser[]
-    type: String
+  userId: string;
+  userName: string;
+  allianceName: string;
+  title: string;
+  description: string;
+  time: Date;
+  allianceId: string;
+  recipient: socketUser[];
+  type: string;
 }
 
-export interface notification extends notificationModal {
-    allianceData: alliance
-    user: socketUser
+export interface notification extends Omit<notificationModal, 'userName'|'allianceName'|'allianceId'|'userId'> {
+  allianceData: alliance;
+  user: socketUser;
 }
