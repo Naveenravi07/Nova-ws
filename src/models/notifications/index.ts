@@ -4,6 +4,8 @@ import {notificationModal} from '../../helpers/interfaces/notifications.dto'
 export interface notificationModel extends notificationModal, mongoose.Document { }
 
 const notificationSchema: Schema = new Schema({
+    userName:{type:String,required:false},
+    allianceName:{type:String},
     userId: { type: String, required: true },
     allianceId: { type: String, required: true },
     time: { type: Date, default: Date.now },
