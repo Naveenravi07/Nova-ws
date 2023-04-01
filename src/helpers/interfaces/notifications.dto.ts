@@ -13,7 +13,9 @@ export interface notificationModal {
   type: string;
 }
 
-export interface notification extends Omit<notificationModal, 'userName'|'allianceName'|'allianceId'|'userId'> {
+export interface notification extends Omit<notificationModal, 'userName' | 'allianceName' | 'allianceId' | 'userId'> {
   allianceData: alliance;
   user: socketUser;
+  title : string,
+  description : string
 }
