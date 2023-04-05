@@ -1,5 +1,5 @@
 import notificationModel from "../../models/notifications"
-import { onlineUserDTO } from "../interfaces/user.dtoo"
+import { onlineUserDTO, user } from "../interfaces/user.dtoo"
 import { notification } from '../interfaces/notifications.dto'
 import { Server } from 'socket.io'
 
@@ -42,12 +42,27 @@ const addNormalNotificationMsgTODatabase = async (body: notification,) => {
 
 
 const fetchNotifications = async (data: onlineUserDTO) => {
-    const notifications = await notificationModel.find({ recipient: { $elemMatch: { id: data.userId } } })
-    return notifications
+    const unSeennotifications = await notificationModel.find({ recipient: { $elemMatch: { id: data.userId, seen: false } } })
+    const oldNotifications = await notificationModel.find({ recipient: { $elemMatch: { id: data.userId, seen: true } } })    
+    return {seen:oldNotifications,unseen:unSeennotifications}
+}
+
+const markNotificationAsRead = async (notificationIdList: string[], user: user) => {
+    try {
+        const result = await notificationModel.updateMany(
+            { _id: { $in: notificationIdList }, 'recipient.id': user.id },
+            { $set: { 'recipient.$.seen': true } }
+        );
+        return result;
+
+    } catch (error) {
+        throw error
+    }
 }
 
 export {
     addLiveNotificationMsgTODatabase,
     fetchNotifications,
-    addNormalNotificationMsgTODatabase
+    addNormalNotificationMsgTODatabase,
+    markNotificationAsRead
 }
