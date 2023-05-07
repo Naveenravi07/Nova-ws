@@ -43,7 +43,7 @@ const addNormalNotificationMsgTODatabase = async (body: notification,) => {
 
 const fetchNotifications = async (data: onlineUserDTO) => {
     const unSeennotifications = await notificationModel.find({ recipient: { $elemMatch: { id: data.userId, seen: false } } })
-    const oldNotifications = await notificationModel.find({ recipient: { $elemMatch: { id: data.userId, seen: true } } })    
+    const oldNotifications = await notificationModel.find({ recipient: { $elemMatch: { id: data.userId, seen: true } } }).sort({time:-1})    
     return {seen:oldNotifications,unseen:unSeennotifications}
 }
 
