@@ -11,6 +11,7 @@ export interface notificationModal {
   allianceId: string;
   recipient: socketUser[];
   type: string;
+  notificationImageUrl:String
 }
 
 export interface notification extends Omit<notificationModal, 'userName' | 'allianceName' | 'allianceId' | 'userId'> {
