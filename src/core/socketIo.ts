@@ -1,6 +1,6 @@
 import { Server as SocketServer, Socket } from 'socket.io'
 import { Server as httpServer } from 'http'
-import { addLiveNotificationMsgTODatabase, fetchNotifications, addNormalNotificationMsgTODatabase ,markNotificationAsRead} from '../helpers/DB Functions'
+import { addLiveNotificationMsgTODatabase, fetchNotifications, addNormalNotificationMsgTODatabase ,markNotificationAsRead} from '../services/notification/notification.service'
 import { onlineUserDTO } from '../helpers/interfaces/user.dtoo'
 import { notification } from '../helpers/interfaces/notifications.dto'
 import { user } from '../helpers/interfaces/user.dtoo'

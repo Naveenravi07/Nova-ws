@@ -17,7 +17,8 @@ const notificationSchema: Schema = new Schema({
     title: { type: String, required: true },
     description: { type: String, required: false },
     recipient:{type:Array<recipientUser>,required:false},
-    type:{type:String,required:true}
+    type:{type:String,required:true},
+    notificationImageUrl:{type:String,required:false}
 })
 
 export default mongoose.model<notificationModel>('notifications', notificationSchema)
