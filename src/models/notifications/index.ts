@@ -10,9 +10,9 @@ interface recipientUser{
 
 const notificationSchema: Schema = new Schema({
     userName:{type:String,required:false},
-    allianceName:{type:String},
+    courseName:{type:String},
     userId: { type: String, required: true },
-    allianceId: { type: String, required: true },
+    courseId: { type: String, required: true },
     time: { type: Date, default: Date.now },
     title: { type: String, required: true },
     description: { type: String, required: false },
