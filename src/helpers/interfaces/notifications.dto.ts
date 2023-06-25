@@ -1,20 +1,21 @@
-import { alliance } from "./alliance.dto";
+import { course } from "./course.dto";
 import { socketUser } from "./user.dtoo";
 
 export interface notificationModal {
   userId: string;
   userName: string;
-  allianceName: string;
+  courseName: string;
   title: string;
   description: string;
   time: Date;
-  allianceId: string;
+  courseId: string;
   recipient: socketUser[];
   type: string;
+  notificationImageUrl:String
 }
 
-export interface notification extends Omit<notificationModal, 'userName' | 'allianceName' | 'allianceId' | 'userId'> {
-  allianceData: alliance;
+export interface notification extends Omit<notificationModal, 'userName' | 'courseName' | 'courseId' | 'userId'> {
+  courseData: course;
   user: socketUser;
   title : string,
   description : string
